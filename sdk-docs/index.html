@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>FotoOwl Media SDK Documentation</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: #e7e7eb;
+      background: #0b0b0f;
+      line-height: 1.7;
+    }
+
+    a {
+      color: #9b8cff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 32px 24px;
+      border-right: 1px solid #24242b;
+      background: #101014;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: #888894;
+      font-size: 13px;
+      margin-bottom: 32px;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 0;
+      color: #aaaab5;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      width: min(1000px, 100%);
+      padding: 60px 70px;
+    }
+
+    .hero {
+      padding-bottom: 45px;
+      border-bottom: 1px solid #24242b;
+      margin-bottom: 50px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border: 1px solid #363640;
+      border-radius: 999px;
+      color: #aaaab5;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 15px;
+      font-size: clamp(38px, 6vw, 62px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: #9b8cff;
+    }
+
+    h2 {
+      margin-top: 60px;
+      margin-bottom: 16px;
+      font-size: 28px;
+    }
+
+    h3 {
+      margin-top: 35px;
+      color: #ffffff;
+    }
+
+    p {
+      color: #b5b5c0;
+    }
+
+    .description {
+      max-width: 720px;
+      font-size: 18px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid #282830;
+      border-radius: 14px;
+      background: #121217;
+    }
+
+    .card strong {
+      display: block;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #19191f;
+      color: #c9c0ff;
+      font-family: Consolas, monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 20px;
+      border: 1px solid #292930;
+      border-radius: 12px;
+      background: #08080b;
+      color: #d8d8df;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .method {
+      margin: 20px 0;
+      padding: 20px;
+      border: 1px solid #282830;
+      border-radius: 12px;
+      background: #111116;
+    }
+
+    .method-title {
+      font-family: Consolas, monospace;
+      color: #c9c0ff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    ul {
+      color: #b5b5c0;
+    }
+
+    li {
+      margin-bottom: 7px;
+    }
+
+    .architecture {
+      padding: 25px;
+      border: 1px solid #282830;
+      border-radius: 14px;
+      background: #111116;
+      font-family: Consolas, monospace;
+      color: #bdb7ff;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      padding-top: 30px;
+      border-top: 1px solid #24242b;
+      color: #777782;
+      font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        display: block;
+      }
+
+      aside {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid #24242b;
+      }
+
+      nav {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+      }
+
+      main {
+        padding: 40px 22px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <aside>
+      <div class="logo">FotoOwl</div>
+      <div class="tagline">Media SDK Documentation</div>
+
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#installation">Installation</a>
+        <a href="#core">Media Core</a>
+        <a href="#photos">Photos</a>
+        <a href="#videos">Videos</a>
+        <a href="#events">Events</a>
+        <a href="#cache">Caching</a>
+        <a href="#react">React SDK</a>
+        <a href="#native">React Native</a>
+        <a href="#types">Types</a>
+      </nav>
+    </aside>
+
+    <main>
+
+      <section class="hero" id="overview">
+        <div class="badge">v1.0.0</div>
+
+        <h1>
+          FotoOwl <span>Media SDK</span>
+        </h1>
+
+        <p class="description">
+          A framework-agnostic media SDK ecosystem for searching,
+          retrieving and interacting with image and video content
+          powered by the Pexels API.
+        </p>
+      </section>
+
+
+      <section>
+        <h2>Overview</h2>
+
+        <p>
+          FotoOwl separates data access, framework integration and
+          UI behavior into independent packages. This makes the SDK
+          reusable across React, React Native and other environments.
+        </p>
+
+        <div class="card-grid">
+
+          <div class="card">
+            <strong>@fotowl/media-core</strong>
+            <p>
+              Framework-agnostic TypeScript SDK for Pexels API
+              communication, caching, pagination and events.
+            </p>
+          </div>
+
+          <div class="card">
+            <strong>@fotowl/media-react</strong>
+            <p>
+              React provider and hooks for consuming the media core
+              through React applications.
+            </p>
+          </div>
+
+          <div class="card">
+            <strong>@fotowl/media-native</strong>
+            <p>
+              React Native provider for using the same media core
+              contract in native applications.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section id="architecture">
+        <h2>Architecture</h2>
+
+        <div class="architecture">
+Application
+    │
+    ├── media-ui-react
+    │
+    └── media-react
+            │
+            ▼
+       media-core
+            │
+            ▼
+        Pexels API
+        </div>
+
+        <p>
+          The core package contains the data and API logic.
+          Framework-specific packages provide integration without
+          duplicating business logic.
+        </p>
+      </section>
+
+
+      <section id="installation">
+        <h2>Installation</h2>
+
+        <p>Install the core SDK:</p>
+
+        <pre><code>npm install @fotowl/media-core</code></pre>
+
+        <p>For React applications:</p>
+
+        <pre><code>npm install @fotowl/media-react</code></pre>
+
+        <p>For React Native applications:</p>
+
+        <pre><code>npm install @fotowl/media-native</code></pre>
+      </section>
+
+
+      <section id="core">
+        <h2>Media Core</h2>
+
+        <p>
+          <code>@fotowl/media-core</code> is the foundation of the
+          FotoOwl SDK. It does not depend on React, React Native or
+          browser-specific UI components.
+        </p>
+
+        <h3>Create a client</h3>
+
+        <pre><code>import { createMediaClient } from "@fotowl/media-core";
+
+const media = createMediaClient({
+  apiKey: "YOUR_PEXELS_API_KEY"
+});</code></pre>
+      </section>
+
+
+      <section id="photos">
+        <h2>Photo API</h2>
+
+        <div class="method">
+          <div class="method-title">
+            searchPhotos(query, page?, perPage?)
+          </div>
+
+          <p>
+            Search Pexels for photos.
+          </p>
+
+          <pre><code>const result = await media.searchPhotos(
+  "mountains",
+  1,
+  20
+);
+
+console.log(result.photos);</code></pre>
+        </div>
+
+
+        <div class="method">
+          <div class="method-title">
+            curatedPhotos(page?, perPage?)
+          </div>
+
+          <p>
+            Retrieve curated photo results.
+          </p>
+        </div>
+
+
+        <div class="method">
+          <div class="method-title">
+            getPhotoById(id)
+          </div>
+
+          <p>
+            Retrieve a single photo by its Pexels ID.
+          </p>
+
+          <pre><code>const photo = await media.getPhotoById(123456);</code></pre>
+        </div>
+      </section>
+
+
+      <section id="videos">
+        <h2>Video API</h2>
+
+        <div class="method">
+          <div class="method-title">
+            searchVideos(query, page?, perPage?)
+          </div>
+
+          <p>
+            Search Pexels for videos.
+          </p>
+
+          <pre><code>const result = await media.searchVideos(
+  "nature",
+  1,
+  20
+);
+
+console.log(result.videos);</code></pre>
+        </div>
+
+
+        <div class="method">
+          <div class="method-title">
+            curatedVideos(page?, perPage?)
+          </div>
+
+          <p>
+            Retrieve curated video results.
+          </p>
+        </div>
+
+
+        <div class="method">
+          <div class="method-title">
+            getVideoById(id)
+          </div>
+
+          <p>
+            Retrieve a single video by its Pexels ID.
+          </p>
+
+          <pre><code>const video = await media.getVideoById(123456);</code></pre>
+        </div>
+      </section>
+
+
+      <section id="events">
+        <h2>Events</h2>
+
+        <p>
+          The SDK provides lightweight event tracking for media
+          interactions.
+        </p>
+
+        <h3>Track a view</h3>
+
+        <pre><code>media.trackView(mediaId);</code></pre>
+
+        <h3>Track a download</h3>
+
+        <pre><code>media.trackDownload(mediaId);</code></pre>
+
+        <p>
+          Events contain the event type, media ID and timestamp.
+          The SDK also provides a default console listener.
+        </p>
+      </section>
+
+
+      <section id="cache">
+        <h2>Caching & Request Deduplication</h2>
+
+        <p>
+          The core SDK includes a lightweight in-memory cache with
+          a default TTL of five minutes.
+        </p>
+
+        <ul>
+          <li>Repeated requests can be served from cache.</li>
+          <li>Expired cache entries are removed automatically.</li>
+          <li>Identical requests already in progress are deduplicated.</li>
+          <li>The cache can be cleared when required.</li>
+        </ul>
+
+        <pre><code>media.clearCache();</code></pre>
+      </section>
+
+
+      <section id="react">
+        <h2>React SDK</h2>
+
+        <p>
+          <code>@fotowl/media-react</code> provides React integration
+          without moving API logic into UI components.
+        </p>
+
+        <h3>Provider</h3>
+
+        <pre><code>import {
+  MediaProvider
+} from "@fotowl/media-react";
+
+function App() {
+  return (
+    &lt;MediaProvider apiKey={API_KEY}&gt;
+      &lt;MyApplication /&gt;
+    &lt;/MediaProvider&gt;
+  );
+}</code></pre>
+
+        <h3>Photo search hook</h3>
+
+        <pre><code>import {
+  useMediaSearch
+} from "@fotowl/media-react";
+
+function Gallery() {
+  const {
+    data,
+    loading,
+    error,
+    search,
+    loadMore,
+    hasMore
+  } = useMediaSearch();
+
+  // Use data in your UI
+}</code></pre>
+
+        <h3>Video search hook</h3>
+
+        <pre><code>const {
+  data,
+  loading,
+  error,
+  search
+} = useMediaVideoSearch();</code></pre>
+      </section>
+
+
+      <section id="native">
+        <h2>React Native SDK</h2>
+
+        <p>
+          <code>@fotowl/media-native</code> provides the same core
+          media client through a React Native provider.
+        </p>
+
+        <pre><code>import {
+  MediaNativeProvider,
+  useMediaNative
+} from "@fotowl/media-native";
+
+function App() {
+  return (
+    &lt;MediaNativeProvider apiKey={API_KEY}&gt;
+      &lt;MobileApp /&gt;
+    &lt;/MediaNativeProvider&gt;
+  );
+}</code></pre>
+      </section>
+
+
+      <section id="types">
+        <h2>TypeScript Types</h2>
+
+        <p>
+          The SDK exposes typed media models for predictable
+          application development.
+        </p>
+
+        <pre><code>MediaPhoto
+MediaVideo
+MediaVideoFile
+PhotoSearchResponse
+VideoSearchResponse
+SearchOptions
+ClientConfig
+MediaItem</code></pre>
+
+        <h3>MediaPhoto</h3>
+
+        <pre><code>interface MediaPhoto {
+  id: number;
+  width: number;
+  height: number;
+  url: string;
+  photographer: string;
+  photographerUrl: string;
+  src: {
+    original: string;
+    large: string;
+    medium: string;
+    small: string;
+    portrait: string;
+    landscape: string;
+  };
+  alt: string;
+}</code></pre>
+      </section>
+
+
+      <footer>
+        FotoOwl Media SDK · Version 1.0.0
+      </footer>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
