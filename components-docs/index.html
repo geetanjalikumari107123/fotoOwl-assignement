@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>FotoOwl Components Documentation</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: #e7e7eb;
+      background: #0b0b0f;
+      line-height: 1.7;
+    }
+
+    a {
+      color: #9b8cff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 32px 24px;
+      border-right: 1px solid #24242b;
+      background: #101014;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .tagline {
+      color: #888894;
+      font-size: 13px;
+      margin-bottom: 32px;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 0;
+      color: #aaaab5;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: white;
+      text-decoration: none;
+    }
+
+    main {
+      width: min(1000px, 100%);
+      padding: 60px 70px;
+    }
+
+    .hero {
+      padding-bottom: 45px;
+      border-bottom: 1px solid #24242b;
+      margin-bottom: 50px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
+      border: 1px solid #363640;
+      border-radius: 999px;
+      color: #aaaab5;
+      font-size: 12px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 15px;
+      font-size: clamp(38px, 6vw, 62px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: #9b8cff;
+    }
+
+    h2 {
+      margin-top: 60px;
+      margin-bottom: 16px;
+      font-size: 28px;
+    }
+
+    h3 {
+      margin-top: 35px;
+      color: #ffffff;
+    }
+
+    p {
+      color: #b5b5c0;
+    }
+
+    .description {
+      max-width: 720px;
+      font-size: 18px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      padding: 22px;
+      border: 1px solid #282830;
+      border-radius: 14px;
+      background: #121217;
+    }
+
+    .card strong {
+      display: block;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 5px;
+      background: #19191f;
+      color: #c9c0ff;
+      font-family: Consolas, monospace;
+    }
+
+    pre {
+      overflow-x: auto;
+      padding: 20px;
+      border: 1px solid #292930;
+      border-radius: 12px;
+      background: #08080b;
+      color: #d8d8df;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .component {
+      margin: 30px 0;
+      padding: 26px;
+      border: 1px solid #282830;
+      border-radius: 14px;
+      background: #111116;
+    }
+
+    .component-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: white;
+      margin-bottom: 8px;
+    }
+
+    .props {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+
+    .props th,
+    .props td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #292930;
+    }
+
+    .props th {
+      color: white;
+    }
+
+    .props td {
+      color: #aaaab5;
+    }
+
+    .architecture {
+      padding: 25px;
+      border: 1px solid #282830;
+      border-radius: 14px;
+      background: #111116;
+      font-family: Consolas, monospace;
+      color: #bdb7ff;
+      white-space: pre-wrap;
+    }
+
+    .note {
+      padding: 18px 20px;
+      border-left: 3px solid #9b8cff;
+      background: #121217;
+      color: #aaaab5;
+      border-radius: 8px;
+    }
+
+    ul {
+      color: #b5b5c0;
+    }
+
+    li {
+      margin-bottom: 7px;
+    }
+
+    footer {
+      padding-top: 30px;
+      border-top: 1px solid #24242b;
+      color: #777782;
+      font-size: 13px;
+    }
+
+    @media (max-width: 800px) {
+      .layout {
+        display: block;
+      }
+
+      aside {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid #24242b;
+      }
+
+      nav {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+      }
+
+      main {
+        padding: 40px 22px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .props {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <aside>
+      <div class="logo">FotoOwl</div>
+      <div class="tagline">Components Documentation</div>
+
+      <nav>
+        <a href="#overview">Overview</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#grid">Grid</a>
+        <a href="#lightbox">Lightbox</a>
+        <a href="#reel">Reel</a>
+        <a href="#react">React</a>
+        <a href="#native">React Native</a>
+        <a href="#accessibility">Accessibility</a>
+        <a href="#styling">Styling</a>
+      </nav>
+    </aside>
+
+    <main>
+
+      <section class="hero" id="overview">
+        <div class="badge">UI Components · v1.0.0</div>
+
+        <h1>
+          FotoOwl <span>Components</span>
+        </h1>
+
+        <p class="description">
+          Headless media UI components for building flexible image
+          and video experiences across React and React Native.
+        </p>
+      </section>
+
+
+      <section>
+        <h2>Overview</h2>
+
+        <p>
+          The FotoOwl UI packages provide reusable interaction
+          behavior while leaving visual presentation to the consuming
+          application.
+        </p>
+
+        <div class="card-grid">
+
+          <div class="card">
+            <strong>Grid</strong>
+            <p>
+              Media collection with infinite scrolling and
+              load-more support.
+            </p>
+          </div>
+
+          <div class="card">
+            <strong>Lightbox</strong>
+            <p>
+              Full-screen media viewer with keyboard and navigation
+              support.
+            </p>
+          </div>
+
+          <div class="card">
+            <strong>Reel</strong>
+            <p>
+              Vertically scrolling, snap-based media experience
+              with active item detection.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section id="architecture">
+        <h2>Architecture</h2>
+
+        <div class="architecture">
+Application
+    │
+    ├── media-ui-react
+    │
+    └── media-ui-native
+
+          │
+          ▼
+
+    Headless UI behavior
+        </div>
+
+        <p>
+          UI components do not communicate directly with the Pexels
+          API or the media SDK. Data and actions are supplied through
+          component props.
+        </p>
+
+        <div class="note">
+          The consuming application owns media rendering, styling,
+          API integration and business logic.
+        </div>
+      </section>
+
+
+      <section id="grid">
+        <h2>Grid</h2>
+
+        <div class="component">
+
+          <div class="component-name">
+            Grid&lt;T&gt;
+          </div>
+
+          <p>
+            A generic media collection component that supports
+            rendering arbitrary data and triggering additional data
+            loading when the user reaches the end of the collection.
+          </p>
+
+          <h3>Usage</h3>
+
+          <pre><code>import { Grid } from "@fotowl/media-ui-react";
+
+&lt;Grid
+  items={photos}
+  hasMore={hasMore}
+  loading={loading}
+  onLoadMore={loadMore}
+  renderItem={(photo) =&gt; (
+    &lt;img
+      src={photo.src.medium}
+      alt={photo.alt}
+    /&gt;
+  )}
+/&gt;</code></pre>
+
+          <h3>Props</h3>
+
+          <table class="props">
+            <thead>
+              <tr>
+                <th>Prop</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>items</td>
+                <td>T[]</td>
+                <td>Items to display.</td>
+              </tr>
+
+              <tr>
+                <td>renderItem</td>
+                <td>(item, index) =&gt; ReactNode</td>
+                <td>Controls how each item is rendered.</td>
+              </tr>
+
+              <tr>
+                <td>onLoadMore</td>
+                <td>() =&gt; void</td>
+                <td>Called when more data should be loaded.</td>
+              </tr>
+
+              <tr>
+                <td>hasMore</td>
+                <td>boolean</td>
+                <td>Indicates whether additional data exists.</td>
+              </tr>
+
+              <tr>
+                <td>loading</td>
+                <td>boolean</td>
+                <td>Prevents repeated loading while a request is active.</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </section>
+
+
+      <section id="lightbox">
+        <h2>Lightbox</h2>
+
+        <div class="component">
+
+          <div class="component-name">
+            Lightbox&lt;T&gt;
+          </div>
+
+          <p>
+            A headless media viewer that provides close and
+            previous/next navigation behavior.
+          </p>
+
+          <h3>Usage</h3>
+
+          <pre><code>import { Lightbox } from "@fotowl/media-ui-react";
+
+&lt;Lightbox
+  isOpen={isOpen}
+  item={selectedPhoto}
+  onClose={handleClose}
+  onNext={handleNext}
+  onPrevious={handlePrevious}
+  renderItem={(photo) =&gt; (
+    &lt;img
+      src={photo.src.large}
+      alt={photo.alt}
+    /&gt;
+  )}
+/&gt;</code></pre>
+
+          <h3>Props</h3>
+
+          <table class="props">
+            <thead>
+              <tr>
+                <th>Prop</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>isOpen</td>
+                <td>boolean</td>
+                <td>Controls whether the lightbox is visible.</td>
+              </tr>
+
+              <tr>
+                <td>item</td>
+                <td>T | null</td>
+                <td>Currently selected media item.</td>
+              </tr>
+
+              <tr>
+                <td>onClose</td>
+                <td>() =&gt; void</td>
+                <td>Closes the lightbox.</td>
+              </tr>
+
+              <tr>
+                <td>onNext</td>
+                <td>() =&gt; void</td>
+                <td>Moves to the next item.</td>
+              </tr>
+
+              <tr>
+                <td>onPrevious</td>
+                <td>() =&gt; void</td>
+                <td>Moves to the previous item.</td>
+              </tr>
+
+              <tr>
+                <td>renderItem</td>
+                <td>(item) =&gt; ReactNode</td>
+                <td>Controls media presentation.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Keyboard Navigation</h3>
+
+          <ul>
+            <li><code>Escape</code> closes the lightbox.</li>
+            <li><code>ArrowRight</code> moves to the next item.</li>
+            <li><code>ArrowLeft</code> moves to the previous item.</li>
+          </ul>
+
+        </div>
+      </section>
+
+
+      <section id="reel">
+        <h2>Reel</h2>
+
+        <div class="component">
+
+          <div class="component-name">
+            Reel&lt;T&gt;
+          </div>
+
+          <p>
+            A vertical media experience using scroll snapping and
+            visibility detection to identify the active item.
+          </p>
+
+          <h3>Usage</h3>
+
+          <pre><code>import { Reel } from "@fotowl/media-ui-react";
+
+&lt;Reel
+  items={videos}
+  onActiveChange={(video, index) =&gt; {
+    console.log("Active:", video.id);
+  }}
+  renderItem={(video, index, isActive) =&gt; (
+    &lt;video
+      src={video.videoFiles[0].link}
+      autoPlay={isActive}
+      muted
+      loop
+      playsInline
+    /&gt;
+  )}
+/&gt;</code></pre>
+
+          <h3>Props</h3>
+
+          <table class="props">
+            <thead>
+              <tr>
+                <th>Prop</th>
+                <th>Type</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>items</td>
+                <td>T[]</td>
+                <td>Items displayed in the reel.</td>
+              </tr>
+
+              <tr>
+                <td>renderItem</td>
+                <td>(item, index, isActive) =&gt; ReactNode</td>
+                <td>Controls the media presentation.</td>
+              </tr>
+
+              <tr>
+                <td>onActiveChange</td>
+                <td>(item, index) =&gt; void</td>
+                <td>Called when the active item changes.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Active Media</h3>
+
+          <p>
+            The <code>isActive</code> value can be used by the
+            consuming application to control behaviors such as
+            video autoplay and playback.
+          </p>
+
+        </div>
+      </section>
+
+
+      <section id="react">
+        <h2>React Package</h2>
+
+        <p>
+          The React components are available through:
+        </p>
+
+        <pre><code>import {
+  Grid,
+  Lightbox,
+  Reel
+} from "@fotowl/media-ui-react";</code></pre>
+
+        <p>
+          These components are intentionally independent from
+          <code>@fotowl/media-core</code> and
+          <code>@fotowl/media-react</code>.
+        </p>
+      </section>
+
+
+      <section id="native">
+        <h2>React Native Package</h2>
+
+        <p>
+          React Native equivalents are available through:
+        </p>
+
+        <pre><code>import {
+  Grid,
+  Lightbox,
+  Reel
+} from "@fotowl/media-ui-native";</code></pre>
+
+        <p>
+          The native package uses platform-specific primitives such
+          as <code>FlatList</code> and <code>Modal</code> while
+          maintaining the same headless component philosophy.
+        </p>
+
+        <h3>Native Grid</h3>
+
+        <pre><code>&lt;Grid
+  items={photos}
+  hasMore={hasMore}
+  loading={loading}
+  onLoadMore={loadMore}
+  renderItem={(photo) =&gt; (
+    &lt;Image
+      source={{ uri: photo.src.medium }}
+    /&gt;
+  )}
+/&gt;</code></pre>
+
+        <h3>Native Reel</h3>
+
+        <pre><code>&lt;Reel
+  items={videos}
+  onActiveChange={handleActiveChange}
+  renderItem={(video, index, isActive) =&gt; (
+    // React Native media UI
+  )}
+/&gt;</code></pre>
+      </section>
+
+
+      <section id="accessibility">
+        <h2>Accessibility</h2>
+
+        <p>
+          The components provide interaction behavior while the
+          consuming application remains responsible for accessible
+          media content and labels.
+        </p>
+
+        <ul>
+          <li>Use meaningful <code>alt</code> text for images.</li>
+          <li>Provide accessible labels for custom controls.</li>
+          <li>Use semantic buttons for interactive actions.</li>
+          <li>Ensure sufficient color contrast in application styling.</li>
+          <li>Provide keyboard-accessible controls on web.</li>
+        </ul>
+
+        <div class="note">
+          Headless components intentionally avoid imposing a visual
+          design system so applications can implement their own
+          accessibility and branding requirements.
+        </div>
+      </section>
+
+
+      <section id="styling">
+        <h2>Styling</h2>
+
+        <p>
+          The UI packages do not impose a CSS framework or visual
+          design system.
+        </p>
+
+        <p>
+          Applications control styling through their own CSS,
+          Tailwind classes, CSS modules or other styling solutions.
+        </p>
+
+        <pre><code>&lt;Grid
+  items={photos}
+  renderItem={(photo) =&gt; (
+    &lt;article className="photo-card"&gt;
+      &lt;img
+        src={photo.src.large}
+        alt={photo.alt}
+      /&gt;
+    &lt;/article&gt;
+  )}
+/&gt;</code></pre>
+      </section>
+
+
+      <footer>
+        FotoOwl Components · Version 1.0.0
+      </footer>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
